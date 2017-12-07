@@ -11,7 +11,7 @@ def tower_sum(tower_data, base):
         ts = []
         for st in subtowers:
             ts.append(tower_sum(tower_data, st))
-        print "Tower base ", base, "self ", tower_data[base][0], "subs ", ts, "==", sum(ts)+tower_data[base][0]
+        print "Tower base", base, "self", tower_data[base][0], "subs", ts, "==", sum(ts)+tower_data[base][0]
 
         if len(set(ts)) != 1:
             c = Counter(ts).most_common()
@@ -20,7 +20,7 @@ def tower_sum(tower_data, base):
             print "This tower has uneven children"
             info = zip(tower_data[base][1], ts)            
             offender = [x for x in info if x[1] == cmin]
-            print "Change ", offender[0], " weight to ", tower_data[offender[0][0]][0] + (cmax-cmin)
+            print "Change", offender[0][0], "weight to", tower_data[offender[0][0]][0] + (cmax-cmin)
             
             sys.exit(0)
         
