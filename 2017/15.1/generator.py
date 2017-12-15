@@ -24,7 +24,6 @@ print B
 
 judge = 0
 for i in xrange(0, 5000000):
-    print i
     A = step(A, 16807, 4)
     B = step(B, 48271, 8)
 
