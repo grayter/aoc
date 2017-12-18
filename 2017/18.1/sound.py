@@ -8,6 +8,8 @@ regA['p'] = 0
 regB = defaultdict(int)
 regB['p'] = 1
 
+progressed = [-1,-1]
+
 def isInt(s):
     try:
         int(s)
@@ -57,9 +59,16 @@ with open(sys.argv[1]) as f:
     i = 0
     prog = 0
     queues = [[],[]]
+
+    local_progress = 0
     
     while i < len(data):
+        if min(progressed) == 0:
+            print "Now terminating"
+            sys.exit(0)
+            
         print "Running Prog", prog
+        print progressed
         instruction = data[i].strip()
         registers = operate(instruction, reg, prog, queues)
         if reg["JUMP"] != 0:
@@ -71,16 +80,22 @@ with open(sys.argv[1]) as f:
                     iA = i
                     i = iB
                     prog = 1
+                    progressed[0] = local_progress
+                    local_progress = 0
                 else:
                     reg = regA
                     iB = i
                     i = iA
                     prog = 0
+                    progressed[1] = local_progress
+                    local_progress = 0
             else:
                 i += registers["JUMP"]
                 reg["JUMP"] = 0
+                local_progress += 1
         else:
             i += 1
+            local_progress += 1
 
         print "A", regA
         print "B", regB
